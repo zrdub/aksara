@@ -1,0 +1,94 @@
+---
+name: Bug Report
+description: Report a reproducible problem in AKSARA.
+title: "[Bug]: "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting a bug. Please include enough detail for
+        maintainers to reproduce the problem.
+  - type: input
+    id: version
+    attributes:
+      label: AKSARA version
+      description: Run `aksara versi` or provide the commit SHA.
+    validations:
+      required: true
+  - type: input
+    id: python
+    attributes:
+      label: Python version
+      description: Run `python --version`.
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected area
+      options:
+        - CLI
+        - Lexer
+        - Parser
+        - Interpreter
+        - Runtime
+        - Standard library
+        - Documentation
+        - Packaging
+        - Tests
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: Describe the problem clearly and briefly.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Provide exact commands, input files, or code snippets.
+      value: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What should have happened?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: What happened instead? Include error output when relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: >
+        Include operating system, shell, installation method, and any relevant
+        context.
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Confirmation
+      options:
+        - label: >
+            I searched existing issues and did not find a duplicate.
+          required: true
+        - label: >
+            This is not a security vulnerability. Security issues should be
+            reported privately according to SECURITY.md.
+          required: true

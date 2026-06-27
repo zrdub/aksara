@@ -1,0 +1,72 @@
+---
+name: Feature Request
+description: Suggest an improvement or new capability for AKSARA.
+title: "[Feature]: "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting an improvement. Please explain the user need
+        and the tradeoffs.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Language syntax
+        - CLI
+        - Lexer
+        - Parser
+        - Interpreter
+        - Runtime
+        - Standard library
+        - Documentation
+        - Packaging
+        - Tests
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: >
+        What problem would this solve for AKSARA users or contributors?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: >
+        Describe the behavior, API, command, syntax, or documentation you want.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Describe other approaches and why they are less suitable.
+    validations:
+      required: true
+  - type: textarea
+    id: examples
+    attributes:
+      label: Examples
+      description: >
+        Include AKSARA code, CLI commands, or documentation snippets that show
+        the feature.
+      render: aksara
+    validations:
+      required: false
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Confirmation
+      options:
+        - label: >
+            I searched existing issues and did not find a duplicate.
+          required: true
+        - label: >
+            I am willing to help test or document this feature.
+          required: false

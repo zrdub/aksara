@@ -47,5 +47,5 @@ buat kata = pisah(kalimat, " ")
 
 tulis "=== Olah Teks ==="
 tulis huruf_kecil(kalimat)
-tulis "Jumlah kata:"+panjang(kata)
+tulis "Jumlah kata: " + panjang(kata)
 
