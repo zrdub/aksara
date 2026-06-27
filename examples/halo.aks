@@ -1,0 +1,51 @@
+buat nama = "Reza"
+buat umur = 21
+buat kota = "Bandung"
+buat bahasa = "aksara"
+buat nilai_tugas = 84
+buat nilai_ujian = 91
+buat bonus = 5
+buat total_nilai = nilai_tugas + nilai_ujian + bonus
+buat rata_rata = total_nilai / 2
+buat batas_lulus = 85
+
+tulis "=== Profil Siswa ==="
+tulis "Nama: " + nama
+tulis "Kota: " + kota
+tulis "Bahasa favorit: " + huruf_besar(bahasa)
+
+jika umur >= 18
+    tulis "Status umur: Dewasa"
+jika_tidak
+    tulis "Status umur: Anak"
+selesai
+
+tulis "=== Nilai ==="
+tulis "Nilai tugas: " + nilai_tugas
+tulis "Nilai ujian: " + nilai_ujian
+tulis "Bonus: " + bonus
+tulis "Rata-rata: " + rata_rata
+
+jika rata_rata >= batas_lulus
+    tulis "Hasil: Lulus"
+    tulis "Catatan: Pertahankan ritme belajar."
+jika_tidak
+    tulis "Hasil: Belum lulus"
+    tulis "Catatan: Coba ulangi materi dasar."
+selesai
+
+buat daftar_topik = ["lexer", "parser", "runtime", "cli"]
+buat ringkasan = {"nama": nama, "umur": umur, "kota": kota}
+
+tulis "=== Rencana Belajar ==="
+tulis "Jumlah topik: " + panjang(daftar_topik)
+tulis "Topik: " + gabung(daftar_topik, ", ")
+tulis "Ringkasan: " + ringkasan
+
+buat kalimat = "AKSARA membuat belajar pemrograman terasa dekat"
+buat kata = pisah(kalimat, " ")
+
+tulis "=== Olah Teks ==="
+tulis huruf_kecil(kalimat)
+tulis "Jumlah kata:"+panjang(kata)
+

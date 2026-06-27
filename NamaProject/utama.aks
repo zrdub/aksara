@@ -1,0 +1,2 @@
+buat nama = "AKSARA"
+tulis "Halo, " + nama

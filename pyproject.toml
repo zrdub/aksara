@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aksara"
+version = "0.1.0"
+description = "AKSARA, a modern interpreted programming language in Indonesian."
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [{ name = "AKSARA Language Team" }]
+license = { text = "MIT" }
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=9.1"]
+
+[project.scripts]
+aksara = "aksara.cli.main:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
