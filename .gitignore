@@ -4,6 +4,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+
 # Virtual environments
 .venv/
 venv/
@@ -55,3 +56,4 @@ Thumbs.db
 !LICENSE
 !pyproject.toml
 !requirements.txt
+

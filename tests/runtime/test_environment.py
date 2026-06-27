@@ -21,5 +21,5 @@ def test_environment_suggests_close_name() -> None:
     with pytest.raises(RuntimeAksaraError) as error:
         environment.get(token)
 
-    assert "Variabel \"namaa\" tidak ditemukan." in str(error.value)
+    assert 'Variabel "namaa" tidak ditemukan.' in str(error.value)
     assert "nama" in str(error.value)

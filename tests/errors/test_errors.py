@@ -3,7 +3,9 @@ from aksara.errors.suggestions import suggest_name
 
 
 def test_error_string_is_human_friendly() -> None:
-    error = RuntimeAksaraError('Variabel "namaa" tidak ditemukan.', 10, suggestion="nama")
+    error = RuntimeAksaraError(
+        'Variabel "namaa" tidak ditemukan.', 10, suggestion="nama"
+    )
 
     text = str(error)
 

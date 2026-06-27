@@ -46,10 +46,14 @@ class Parser:
         return self._statement()
 
     def _var_declaration(self) -> VarStatement:
-        name = self._consume(TokenType.IDENTIFIER, "Nama variabel diperlukan setelah 'buat'.")
+        name = self._consume(
+            TokenType.IDENTIFIER, "Nama variabel diperlukan setelah 'buat'."
+        )
         self._consume(TokenType.EQUAL, "Gunakan '=' setelah nama variabel.")
         initializer = self._expression()
-        self._consume_line_end("Akhiri deklarasi variabel dengan baris baru atau akhir berkas.")
+        self._consume_line_end(
+            "Akhiri deklarasi variabel dengan baris baru atau akhir berkas."
+        )
         return VarStatement(name, initializer)
 
     def _statement(self) -> Statement:
@@ -61,7 +65,9 @@ class Parser:
 
     def _print_statement(self) -> PrintStatement:
         expression = self._expression()
-        self._consume_line_end("Akhiri perintah 'tulis' dengan baris baru atau akhir berkas.")
+        self._consume_line_end(
+            "Akhiri perintah 'tulis' dengan baris baru atau akhir berkas."
+        )
         return PrintStatement(expression)
 
     def _expression_statement(self) -> ExpressionStatement:
@@ -102,7 +108,12 @@ class Parser:
 
     def _comparison(self) -> Expression:
         expression = self._term()
-        while self._match(TokenType.GREATER, TokenType.GREATER_EQUAL, TokenType.LESS, TokenType.LESS_EQUAL):
+        while self._match(
+            TokenType.GREATER,
+            TokenType.GREATER_EQUAL,
+            TokenType.LESS,
+            TokenType.LESS_EQUAL,
+        ):
             operator = self._previous()
             right = self._term()
             expression = BinaryExpression(expression, operator, right)
@@ -145,7 +156,9 @@ class Parser:
                 arguments.append(self._expression())
                 if not self._match(TokenType.COMMA):
                     break
-        paren = self._consume(TokenType.RIGHT_PAREN, "Gunakan ')' setelah argumen fungsi.")
+        paren = self._consume(
+            TokenType.RIGHT_PAREN, "Gunakan ')' setelah argumen fungsi."
+        )
         return CallExpression(callee, paren, tuple(arguments))
 
     def _primary(self) -> Expression:
@@ -185,7 +198,9 @@ class Parser:
         if not self._check(TokenType.RIGHT_BRACE):
             while True:
                 key = self._expression()
-                self._consume(TokenType.COLON, "Gunakan ':' antara kunci dan nilai dictionary.")
+                self._consume(
+                    TokenType.COLON, "Gunakan ':' antara kunci dan nilai dictionary."
+                )
                 value = self._expression()
                 entries.append((key, value))
                 if not self._match(TokenType.COMMA):
@@ -197,7 +212,11 @@ class Parser:
         if self._match(TokenType.NEWLINE):
             self._skip_newlines()
             return
-        if self._check(TokenType.EOF) or self._check(TokenType.JIKA_TIDAK) or self._check(TokenType.SELESAI):
+        if (
+            self._check(TokenType.EOF)
+            or self._check(TokenType.JIKA_TIDAK)
+            or self._check(TokenType.SELESAI)
+        ):
             return
         token = self._peek()
         raise SyntaxAksaraError(message, token.line, token.column)

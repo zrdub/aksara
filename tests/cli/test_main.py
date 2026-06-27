@@ -70,7 +70,9 @@ def test_cli_runs_default_main_file(tmp_path: Path, capsys, monkeypatch) -> None
     assert captured.out.strip() == "Utama dari main"
 
 
-def test_cli_runs_default_utama_file_when_main_is_absent(tmp_path: Path, capsys, monkeypatch) -> None:
+def test_cli_runs_default_utama_file_when_main_is_absent(
+    tmp_path: Path, capsys, monkeypatch
+) -> None:
     (tmp_path / "utama.aks").write_text('tulis "Utama"\n', encoding="utf-8")
     monkeypatch.chdir(tmp_path)
 
@@ -82,7 +84,9 @@ def test_cli_runs_default_utama_file_when_main_is_absent(tmp_path: Path, capsys,
     assert captured.out.strip() == "Utama"
 
 
-def test_resolve_source_file_searches_common_locations(tmp_path: Path, monkeypatch) -> None:
+def test_resolve_source_file_searches_common_locations(
+    tmp_path: Path, monkeypatch
+) -> None:
     examples_dir = tmp_path / "examples"
     src_dir = tmp_path / "src"
     examples_dir.mkdir()
@@ -96,7 +100,9 @@ def test_resolve_source_file_searches_common_locations(tmp_path: Path, monkeypat
     assert resolve_source_file("halo.aks") == PROJECT_ROOT / "examples" / "halo.aks"
 
 
-def test_cli_reports_missing_file_in_indonesian(tmp_path: Path, capsys, monkeypatch) -> None:
+def test_cli_reports_missing_file_in_indonesian(
+    tmp_path: Path, capsys, monkeypatch
+) -> None:
     monkeypatch.chdir(tmp_path)
 
     exit_code = main(["jalankan", "tidak-ada.aks"])
@@ -113,7 +119,9 @@ def test_cli_reports_missing_file_in_indonesian(tmp_path: Path, capsys, monkeypa
     assert "aksara jalankan examples/tidak-ada.aks" in captured.err
 
 
-def test_resolve_source_file_reports_missing_default_files(tmp_path: Path, monkeypatch) -> None:
+def test_resolve_source_file_reports_missing_default_files(
+    tmp_path: Path, monkeypatch
+) -> None:
     monkeypatch.chdir(tmp_path)
 
     with pytest.raises(AksaraError) as error:
@@ -122,7 +130,9 @@ def test_resolve_source_file_reports_missing_default_files(tmp_path: Path, monke
     assert 'Berkas "main.aks atau utama.aks" tidak ditemukan.' in str(error.value)
 
 
-def test_cli_build_validates_recursive_sources(tmp_path: Path, capsys, monkeypatch) -> None:
+def test_cli_build_validates_recursive_sources(
+    tmp_path: Path, capsys, monkeypatch
+) -> None:
     source_dir = tmp_path / "contoh"
     source_dir.mkdir()
     (source_dir / "program.aks").write_text('tulis "Halo"\n', encoding="utf-8")

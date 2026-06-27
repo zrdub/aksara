@@ -55,7 +55,9 @@ def main(argv: Sequence[str] | None = None) -> int:
 
 
 def _build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog="aksara", description="Bahasa pemrograman AKSARA.")
+    parser = argparse.ArgumentParser(
+        prog="aksara", description="Bahasa pemrograman AKSARA."
+    )
     subparsers = parser.add_subparsers(dest="command")
 
     run_parser = subparsers.add_parser("jalankan", help="Jalankan berkas .aks.")
@@ -89,7 +91,9 @@ def resolve_source_file(filename: str | None = None) -> Path:
     raise AksaraError(_format_source_not_found(filename, checked))
 
 
-def _format_source_not_found(filename: str | None, checked: Sequence[tuple[str, Path]]) -> str:
+def _format_source_not_found(
+    filename: str | None, checked: Sequence[tuple[str, Path]]
+) -> str:
     source_name = filename or "main.aks atau utama.aks"
     checked_labels = _unique_labels(label for label, _ in checked)
     message = [
@@ -120,7 +124,12 @@ def _first_suggested_path(filename: str | None) -> str | None:
         return None
     if Path(filename).parent == Path("."):
         return (Path("examples") / filename).as_posix()
-    for directory in (Path("examples"), PROJECT_ROOT / "examples", Path("src"), PROJECT_ROOT / "src"):
+    for directory in (
+        Path("examples"),
+        PROJECT_ROOT / "examples",
+        Path("src"),
+        PROJECT_ROOT / "src",
+    ):
         candidate = directory / filename
         if candidate.is_file():
             try:
@@ -134,7 +143,9 @@ def _run_file(path: Path) -> int:
     try:
         source = path.read_text(encoding="utf-8")
     except OSError as error:
-        raise AksaraError(f'Tidak dapat membaca berkas "{path}": {error.strerror or error}') from error
+        raise AksaraError(
+            f'Tidak dapat membaca berkas "{path}": {error.strerror or error}'
+        ) from error
 
     result = run_source(source)
     for line in result.output:
@@ -152,13 +163,19 @@ def _format_os_error(error: OSError) -> str:
 def _create_project(path: Path) -> int:
     path.mkdir(parents=False, exist_ok=False)
     source_path = path / "utama.aks"
-    source_path.write_text('buat nama = "AKSARA"\ntulis "Halo, " + nama\n', encoding="utf-8")
+    source_path.write_text(
+        'buat nama = "AKSARA"\ntulis "Halo, " + nama\n', encoding="utf-8"
+    )
     print(f"Proyek dibuat: {path}")
     return 0
 
 
 def _build_project(path: Path) -> int:
-    files = sorted(source_file for source_file in path.rglob("*.aks") if ".git" not in source_file.parts)
+    files = sorted(
+        source_file
+        for source_file in path.rglob("*.aks")
+        if ".git" not in source_file.parts
+    )
     if not files:
         print("Tidak ada berkas .aks untuk dibangun.")
         return 0

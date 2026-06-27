@@ -58,13 +58,21 @@ class Lexer:
         elif char == "%":
             self._add_token(TokenType.PERCENT)
         elif char == "!":
-            self._add_token(TokenType.BANG_EQUAL if self._match("=") else TokenType.BANG)
+            self._add_token(
+                TokenType.BANG_EQUAL if self._match("=") else TokenType.BANG
+            )
         elif char == "=":
-            self._add_token(TokenType.EQUAL_EQUAL if self._match("=") else TokenType.EQUAL)
+            self._add_token(
+                TokenType.EQUAL_EQUAL if self._match("=") else TokenType.EQUAL
+            )
         elif char == "<":
-            self._add_token(TokenType.LESS_EQUAL if self._match("=") else TokenType.LESS)
+            self._add_token(
+                TokenType.LESS_EQUAL if self._match("=") else TokenType.LESS
+            )
         elif char == ">":
-            self._add_token(TokenType.GREATER_EQUAL if self._match("=") else TokenType.GREATER)
+            self._add_token(
+                TokenType.GREATER_EQUAL if self._match("=") else TokenType.GREATER
+            )
         elif char == "/":
             if self._match("/"):
                 while self._peek() != "\n" and not self._is_at_end():
@@ -94,7 +102,7 @@ class Lexer:
     def _identifier(self) -> None:
         while self._peek().isalnum() or self._peek() == "_":
             self._advance()
-        text = self._source[self._start:self._current]
+        text = self._source[self._start : self._current]
         self._add_token(KEYWORDS.get(text, TokenType.IDENTIFIER))
 
     def _number(self) -> None:
@@ -108,7 +116,7 @@ class Lexer:
             while self._peek().isdigit():
                 self._advance()
 
-        text = self._source[self._start:self._current]
+        text = self._source[self._start : self._current]
         literal: int | float = float(text) if is_float else int(text)
         self._add_token(TokenType.FLOAT if is_float else TokenType.INTEGER, literal)
 
@@ -125,7 +133,9 @@ class Lexer:
                 value_chars.append(char)
 
         if self._is_at_end():
-            raise SyntaxAksaraError("String belum ditutup.", self._line, self._token_column)
+            raise SyntaxAksaraError(
+                "String belum ditutup.", self._line, self._token_column
+            )
 
         self._advance()
         self._add_token(TokenType.STRING, "".join(value_chars))
@@ -164,8 +174,10 @@ class Lexer:
         return char
 
     def _add_token(self, token_type: TokenType, literal: object | None = None) -> None:
-        text = self._source[self._start:self._current]
-        self._tokens.append(Token(token_type, text, literal, self._line, self._token_column))
+        text = self._source[self._start : self._current]
+        self._tokens.append(
+            Token(token_type, text, literal, self._line, self._token_column)
+        )
 
     def _is_at_end(self) -> bool:
         return self._current >= len(self._source)

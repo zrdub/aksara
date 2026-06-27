@@ -41,7 +41,9 @@ def _standard_functions() -> dict[str, NativeFunction]:
     }
 
 
-def _expect_arity(name: str, args: tuple[object, ...], minimum: int, maximum: int | None = None) -> None:
+def _expect_arity(
+    name: str, args: tuple[object, ...], minimum: int, maximum: int | None = None
+) -> None:
     max_args = minimum if maximum is None else maximum
     if not minimum <= len(args) <= max_args:
         if minimum == max_args:
@@ -55,7 +57,9 @@ def _panjang(*args: object) -> int:
     _expect_arity("panjang", args, 1)
     value = args[0]
     if not isinstance(value, (str, list, dict)):
-        raise RuntimeAksaraError("Fungsi panjang() hanya menerima string, list, atau dictionary.")
+        raise RuntimeAksaraError(
+            "Fungsi panjang() hanya menerima string, list, atau dictionary."
+        )
     return len(value)
 
 
@@ -94,7 +98,9 @@ def _pisah(*args: object) -> list[str]:
     _expect_arity("pisah", args, 2)
     text, separator = args
     if not isinstance(text, str) or not isinstance(separator, str):
-        raise RuntimeAksaraError("Fungsi pisah() membutuhkan string dan string pemisah.")
+        raise RuntimeAksaraError(
+            "Fungsi pisah() membutuhkan string dan string pemisah."
+        )
     return text.split(separator)
 
 
@@ -128,7 +134,9 @@ def _tulis_berkas(*args: object) -> None:
     _expect_arity("tulis_berkas", args, 2)
     path, content = args
     if not isinstance(path, str) or not isinstance(content, str):
-        raise RuntimeAksaraError("Fungsi tulis_berkas() membutuhkan path dan isi string.")
+        raise RuntimeAksaraError(
+            "Fungsi tulis_berkas() membutuhkan path dan isi string."
+        )
     Path(path).write_text(content, encoding="utf-8")
     return None
 

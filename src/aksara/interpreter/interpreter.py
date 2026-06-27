@@ -32,7 +32,9 @@ OutputWriter = Callable[[str], None]
 class Interpreter:
     """Execute AKSARA AST programs."""
 
-    def __init__(self, output: OutputWriter | None = None, environment: Environment | None = None) -> None:
+    def __init__(
+        self, output: OutputWriter | None = None, environment: Environment | None = None
+    ) -> None:
         """Create an interpreter with an optional output sink and environment."""
         self.environment = environment or create_standard_environment()
         self._output = output or print
@@ -44,7 +46,9 @@ class Interpreter:
 
     def _execute(self, statement: Statement) -> None:
         if isinstance(statement, VarStatement):
-            self.environment.define(statement.name.lexeme, self._evaluate(statement.initializer))
+            self.environment.define(
+                statement.name.lexeme, self._evaluate(statement.initializer)
+            )
             return
         if isinstance(statement, PrintStatement):
             self._output(stringify(self._evaluate(statement.expression)))
@@ -53,11 +57,17 @@ class Interpreter:
             self._evaluate(statement.expression)
             return
         if isinstance(statement, IfStatement):
-            branch = statement.then_branch if self._is_truthy(self._evaluate(statement.condition)) else statement.else_branch
+            branch = (
+                statement.then_branch
+                if self._is_truthy(self._evaluate(statement.condition))
+                else statement.else_branch
+            )
             for child in branch:
                 self._execute(child)
             return
-        raise RuntimeAksaraError(f"Statement belum didukung: {type(statement).__name__}.")
+        raise RuntimeAksaraError(
+            f"Statement belum didukung: {type(statement).__name__}."
+        )
 
     def _evaluate(self, expression: Expression) -> object:
         if isinstance(expression, LiteralExpression):
@@ -75,8 +85,13 @@ class Interpreter:
         if isinstance(expression, ListExpression):
             return [self._evaluate(item) for item in expression.items]
         if isinstance(expression, DictionaryExpression):
-            return {self._evaluate(key): self._evaluate(value) for key, value in expression.entries}
-        raise RuntimeAksaraError(f"Ekspresi belum didukung: {type(expression).__name__}.")
+            return {
+                self._evaluate(key): self._evaluate(value)
+                for key, value in expression.entries
+            }
+        raise RuntimeAksaraError(
+            f"Ekspresi belum didukung: {type(expression).__name__}."
+        )
 
     def _evaluate_unary(self, expression: UnaryExpression) -> object:
         right = self._evaluate(expression.right)
@@ -85,7 +100,9 @@ class Interpreter:
             return -right
         if expression.operator.type == TokenType.BANG:
             return not self._is_truthy(right)
-        raise RuntimeAksaraError("Operator unary tidak dikenal.", expression.operator.line)
+        raise RuntimeAksaraError(
+            "Operator unary tidak dikenal.", expression.operator.line
+        )
 
     def _evaluate_binary(self, expression: BinaryExpression) -> object:
         left = self._evaluate(expression.left)
@@ -97,7 +114,9 @@ class Interpreter:
                 return left + right
             if isinstance(left, str) or isinstance(right, str):
                 return stringify(left) + stringify(right)
-            raise RuntimeAksaraError("Operator '+' membutuhkan angka atau string.", expression.operator.line)
+            raise RuntimeAksaraError(
+                "Operator '+' membutuhkan angka atau string.", expression.operator.line
+            )
         if token_type == TokenType.MINUS:
             self._require_numbers(left, right, expression.operator.line)
             return left - right
@@ -107,7 +126,10 @@ class Interpreter:
         if token_type == TokenType.SLASH:
             self._require_numbers(left, right, expression.operator.line)
             if right == 0:
-                raise RuntimeAksaraError("Pembagian dengan nol tidak diperbolehkan.", expression.operator.line)
+                raise RuntimeAksaraError(
+                    "Pembagian dengan nol tidak diperbolehkan.",
+                    expression.operator.line,
+                )
             return left / right
         if token_type == TokenType.PERCENT:
             self._require_numbers(left, right, expression.operator.line)
@@ -128,21 +150,29 @@ class Interpreter:
             return left == right
         if token_type == TokenType.BANG_EQUAL:
             return left != right
-        raise RuntimeAksaraError("Operator binary tidak dikenal.", expression.operator.line)
+        raise RuntimeAksaraError(
+            "Operator binary tidak dikenal.", expression.operator.line
+        )
 
     def _evaluate_call(self, expression: CallExpression) -> object:
         callee = self._evaluate(expression.callee)
         arguments = tuple(self._evaluate(argument) for argument in expression.arguments)
         if not callable(callee):
-            raise RuntimeAksaraError("Nilai ini tidak dapat dipanggil sebagai fungsi.", expression.paren.line)
+            raise RuntimeAksaraError(
+                "Nilai ini tidak dapat dipanggil sebagai fungsi.", expression.paren.line
+            )
         try:
             return callee(*arguments)
         except RuntimeAksaraError:
             raise
         except OSError as error:
-            raise RuntimeAksaraError(f"Operasi berkas gagal: {error}", expression.paren.line) from error
+            raise RuntimeAksaraError(
+                f"Operasi berkas gagal: {error}", expression.paren.line
+            ) from error
         except TypeError as error:
-            raise RuntimeAksaraError(f"Pemanggilan fungsi tidak valid: {error}", expression.paren.line) from error
+            raise RuntimeAksaraError(
+                f"Pemanggilan fungsi tidak valid: {error}", expression.paren.line
+            ) from error
 
     @staticmethod
     def _is_truthy(value: object) -> bool:

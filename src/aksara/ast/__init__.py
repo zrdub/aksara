@@ -11,7 +11,14 @@ from aksara.ast.expressions import (
     UnaryExpression,
     VariableExpression,
 )
-from aksara.ast.statements import ExpressionStatement, IfStatement, PrintStatement, Program, Statement, VarStatement
+from aksara.ast.statements import (
+    ExpressionStatement,
+    IfStatement,
+    PrintStatement,
+    Program,
+    Statement,
+    VarStatement,
+)
 
 __all__ = [
     "BinaryExpression",
